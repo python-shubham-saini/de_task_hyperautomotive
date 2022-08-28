@@ -56,7 +56,7 @@ def InsertJsonData():
         cursor.execute(
             f"create table {device_id[i]}(private_Key VARCHAR(8), ping_type TINYINT(2) UNSIGNED, rtc TIMESTAMP(6), ses_tim INT(5), lat FLOAT(9), longi FLOAT(10), data_size TINYINT(2) UNSIGNED, data VARCHAR(50), ping_time TIMESTAMP)")
 
-        # Reading all Data from all json files
+        # Reading Data from all json files
         for j in range(len(file_list)):
             with open(file_list[j]) as f:
                 data = json.load(f)
@@ -75,7 +75,7 @@ def InsertJsonData():
                     # print('textData', textData)
 
                     if device_private_key[i] == textData['PVT_KEY']:
-                        # inserting Data according into tables
+                        # inserting Data into tables
                         cursor.execute(
                             f"insert into {device_id[i]} values ('{textData['PVT_KEY']}', {int(textData['PING_TYPE'])},{tsToDate(textData['RTC'])} , {int(textData['Ses_time'])}, {float(decimal_degrees(*dm(float(textData['LAT']))))}, {float(decimal_degrees(*dm(float(textData['LONGI']))))}, 00, {textData['DATA']}, {tsToDate(ts)})")
                         mydb.commit()
@@ -89,7 +89,7 @@ def InsertJsonData():
                         # print('file No.->', (j), k)
                         # print('newData ', newData)
 
-                        # inserting Data according into tables
+                        # inserting Data into tables
                         cursor.execute(
                             f"insert into {device_id[i]} values ('{newData[0]}', {int(convertIntoInt(newData[1]))},{tsToDate(newData[2])} , {int(newData[3])}, {float(decimal_degrees(*dm(float(newData[4]))))}, {float(decimal_degrees(*dm(float(newData[5]))))}, {newData[6]}, '{newData[7]}', {tsToDate(ts)})")
                         mydb.commit()
